@@ -3,6 +3,10 @@ import Chatbar from './Chatbar.jsx';
 // import Message from './Message.jsx';
 import MessageList from './MessageList.jsx';
 
+function generateRandomString() {
+  return Math.floor((1 + Math.random()) * 0x1000000).toString(16).substring(1);
+}
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -25,13 +29,49 @@ class App extends Component {
         ]
       }
     }
-  
+
+    messageHandler = (evt) => {
+      const newID = generateRandomString();
+      const username= this.state.currentUser.name
+      const messageContent = evt.target.value
+      console.log(evt.target) 
+      const messageObj = {
+        id: newID,
+        username: username,
+        content: messageContent,
+      }
+      
+      if (evt.key === 'Enter') {
+        const messages = this.state.messages.concat(messageObj);
+        console.log(messageObj)
+        this.setState({messages: messages})
+        evt.target.value = "";
+      }
+    }
+
+    //create a function that will grab the content from the input box and update the state for messages
+    //create a new message object - with id, username, and update the state to add to this array of messages
+
+
+    componentDidMount() {
+      console.log('componentDidMount <App />');
+      setTimeout(() => {
+        console.log('Simulating incoming message');
+        // Add a new message to the list of messages in the data store
+        const newMessage = {id: 3, username: 'Michelle', content: 'Hello there!'};
+        const messages = this.state.messages.concat(newMessage)
+        // Update the state of the app component.
+        // Calling setState will trigger a call to render() in App and all child components.
+        this.setState({messages: messages})
+      }, 3000);
+    }
+
   render() {
     
     return (
       <div>
       <MessageList messageList={this.state.messages} />
-      <Chatbar currentUser={this.state.currentUser.name} />
+      <Chatbar currentUser={this.state.currentUser.name} messageHandler={this.messageHandler} />
       </div>
     );
   }
