@@ -43,8 +43,8 @@ wss.broadcast = function(data) {
     });
 }
 
-function broadcastBack(messageObj) {
-    const msg = JSON.parse(messageObj);
+function broadcastBack(messageStringified) {
+    const msg = JSON.parse(messageStringified);
     msg.id = uuidv4();
     
     console.log(`Received: ${JSON.stringify(msg)}`)
