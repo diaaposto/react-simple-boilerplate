@@ -6,9 +6,18 @@ class Chatbar extends Component {
     return (
       <footer className='chatbar'>
         <input className="chatbar-username" defaultValue={this.props.currentUser} />
-        <input className="chatbar-message" placeholder="Type a message and hit ENTER" onKeyPress={this.props.messageHandler} />
+        {/* <input className="chatbar-message" placeholder="Type a message and hit ENTER" onKeyPress={this.props.messageHandler} /> */}
+        <input className="chatbar-message" placeholder="Type a message and hit ENTER" onKeyPress={this.handleKeyPress} />
       </footer>
     );
+  }
+
+  handleKeyPress = ev => {
+    if (ev.key === 'Enter') {
+      this.props.addMessage(ev.target.value);
+      // console.log(messageObj)
+      ev.target.value = "";
+    }
   }
 }
 

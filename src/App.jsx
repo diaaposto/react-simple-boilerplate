@@ -10,68 +10,72 @@ function generateRandomString() {
 class App extends Component {
   constructor(props) {
     super(props);
+    this.socket = new WebSocket('ws://localhost:3001');
+    this.addMessage = this.addMessage
 
-      this.state = {
-        currentUser: 
-        { name: 'Bob' },
+    this.state = {
+      currentUser: 
+      { name: 'Bob' },
 
-        messages: [
-          {
-            id: 1,
-            username: 'Bob',
-            content: 'Has anyone seen my marbles?'
-          },
-          {
-            id: 2,
-            username: 'Anonymous',
-            content: 'No, I think you lost them. You lost your marbles Bob. You lost them for good.'
-          }
-        ]
-      }
+      messages: [
+        {
+          id: 1,
+          username: 'Bob',
+          content: 'Has anyone seen my marbles?'
+        },
+        {
+          id: 2,
+          username: 'Anonymous',
+          content: 'No, I think you lost them. You lost your marbles Bob. You lost them for good.'
+        }
+      ]
     }
+  }
 
-    messageHandler = (evt) => {
-      const newID = generateRandomString();
-      const username= this.state.currentUser.name
-      const messageContent = evt.target.value
-      console.log(evt.target) 
-      const messageObj = {
-        id: newID,
-        username: username,
-        content: messageContent,
-      }
-      
-      if (evt.key === 'Enter') {
-        const messages = this.state.messages.concat(messageObj);
-        console.log(messageObj)
-        this.setState({messages: messages})
-        evt.target.value = "";
-      }
+  addMessage = (msg) => {
+    const newID = generateRandomString();
+    const username = this.state.currentUser.name;
+    const messageContent = msg;
+
+    const messageObj = {
+      id: newID,
+      username: username,
+      content: messageContent,
     }
+    
+    const messages = this.state.messages.concat(messageObj);
+    this.setState({messages: messages})
 
-    //create a function that will grab the content from the input box and update the state for messages
-    //create a new message object - with id, username, and update the state to add to this array of messages
+ 
+  }
+
+  //create a function that will grab the content from the input box and update the state for messages
+  //create a new message object - with id, username, and update the state to add to this array of messages
 
 
-    componentDidMount() {
-      console.log('componentDidMount <App />');
-      setTimeout(() => {
-        console.log('Simulating incoming message');
-        // Add a new message to the list of messages in the data store
-        const newMessage = {id: 3, username: 'Michelle', content: 'Hello there!'};
-        const messages = this.state.messages.concat(newMessage)
-        // Update the state of the app component.
-        // Calling setState will trigger a call to render() in App and all child components.
-        this.setState({messages: messages})
-      }, 3000);
+  componentDidMount() {
+
+    this.socket.onopen = event => {
+      console.log('Connected to server');
     }
+    // console.log('componentDidMount <App />');
+    setTimeout(() => {
+      console.log('Simulating incoming message');
+      // Add a new message to the list of messages in the data store
+      const newMessage = {id: 3, username: 'Michelle', content: 'Hello there!'};
+      const messages = this.state.messages.concat(newMessage)
+      // Update the state of the app component.
+      // Calling setState will trigger a call to render() in App and all child components.
+      this.setState({messages: messages})
+    }, 3000);
+  }
 
   render() {
     
     return (
       <div>
       <MessageList messageList={this.state.messages} />
-      <Chatbar currentUser={this.state.currentUser.name} messageHandler={this.messageHandler} />
+      <Chatbar currentUser={this.state.currentUser.name} addMessage={this.addMessage} />
       </div>
     );
   }
