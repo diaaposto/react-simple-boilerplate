@@ -6,12 +6,11 @@ class MessageList extends Component {
     const allMessages = this.props.messageList.map((message) => 
     <Message key={ message.id } username={ message.username } content={ message.content } />
   );
-
-    return (
-      <main className="messages">
-      {allMessages}
-       <div className="message system"></div>
-       </main>
+  return (
+    <main className="messages">
+    {allMessages}
+    <div className="message system"></div>
+    </main>
     );
   }
 }
