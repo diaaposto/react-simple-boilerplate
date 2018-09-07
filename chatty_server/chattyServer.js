@@ -19,9 +19,16 @@ const server = express()
 // Create the WebSockets server
 const wss = new SocketServer({ server });
 
+//Function to select a colour
+
+const setUserColour = () => {
+  const colours = ['#DC143C', '#52a002', '#883fe2', '#FF8C00', '#483D8B', '#2E8B57', '#DAA520'];
+  return colours[Math.floor(Math.random() * colours.length)];
+}
+
 //Online Users
 
-const onlineUsersFunc = () => {
+const getOnlineUsers = () => {
   let usersOnline = {
     type: 'usersOnline',
     users: wss.clients.size
@@ -33,28 +40,42 @@ wss.broadcast(usersOnline);
 //ws param contains the object of the person that just connected to your socket
 wss.on('connection', (client) => {
   console.log('Client connected');
-  onlineUsersFunc();
+  getOnlineUsers();
+
+  const colourAssign = {
+    type: 'userColour',
+    colour: setUserColour()
+  };
+  client.send(JSON.stringify(colourAssign))
+
   //Echo back messages (testing purposes)
   client.on('message', function incoming(data) {
     broadcastBack(data);
   });
-//   console.log('what is this', broadcastBack(message))
 
   // Set up a callback for when a client closes the socket. This usually means they closed their browser.
-  client.on('close', () => console.log('Client disconnected'));
+  client.on('close', () => {
+    console.log('Client disconnected')
+
+    const onlineUsers = {
+      type: 'usersOnline',
+      users: wss.clients.size
+    }
+  
+    wss.broadcast(onlineUsers)
+  });
+
 });
 
 //broadcast - goes through each client and sends message data
 //clients contains an array of everyone who is connected to the socket @ that moment
-wss.broadcast = function(data) {
+wss.broadcast = (data) => {
   wss.clients.forEach(client =>  {
-    if (client.readyState === WebSocket.OPEN) {
     client.send(JSON.stringify(data));
-    }
   });
 }
 
-function broadcastBack(messageStringified) {
+const broadcastBack = (messageStringified) => {
   const msg = JSON.parse(messageStringified);
   // console.log('this is msg', msg);
   msg.id = uuidv4();

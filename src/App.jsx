@@ -1,27 +1,29 @@
 import React, {Component} from 'react';
 import Chatbar from './Chatbar.jsx';
-// import Message from './Message.jsx';
 import MessageList from './MessageList.jsx';
 
 class App extends Component {
   constructor(props) {
     super(props);
     
-    this.addMessage = this.addMessage
-
     this.state = {
-      currentUser:  { name: 'Bob' },
+      currentUser:  { name: 'Guest' },
       messages: [],
-      connectedUsers: 0
+      connectedUsers: 0,
+      colour: "#000000"
     };
   }
+
+  //take out messageContent variable and either name everything messagecontent or msg
 
   addMessage = (msg) => {
     const username = this.state.currentUser.name;
     const messageContent = msg;
+    console.log(messageContent)
 
     const messageObj = {
       type: 'postMessage',
+      colour: this.state.colour,
       username: username,
       content: messageContent,
     }
@@ -65,6 +67,10 @@ class App extends Component {
         this.setState({messages: [...this.state.messages, data] })
         break;
 
+        case "userColour":
+        this.setState({colour: data.colour})        
+        break;
+
         case "usersOnline":
         this.setState({connectedUsers: data.users})
         // console.log("this is connectedusers", this.state.connectedUsers)
@@ -76,9 +82,6 @@ class App extends Component {
       }
     }
 
-    // const newMessage = this.state.messages.concat(incomingData);
-    // this.setState({messages: newMessage})
-    // console.log('componentDidMount <App />');
     setTimeout(() => {
       console.log('Simulating incoming message');
       // Add a new message to the list of messages in the data store
@@ -89,15 +92,15 @@ class App extends Component {
       this.setState({messages: messages})
     }, 3000);
   }
-
+//use css to display conncted users on the right etc
   render() {
     
     return (
       <div>
         <nav className="navbar">
         <a href="/" className="navbar-brand">Chatty</a>
-        </nav>
         <p>{this.state.connectedUsers} users online.</p>
+        </nav>
         <MessageList messageList={this.state.messages} />
         <Chatbar changeUser={this.changeName} currentUser={this.state.currentUser.name} addMessage={this.addMessage} />
       </div>

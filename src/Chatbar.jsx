@@ -1,4 +1,12 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
+//refactor this and make it a stateless component
+//when its stateless component you're creating a regular function
+//import at the top
+//const Chatbar = props => {
+  // write code in here
+// return
+// }
 
 class Chatbar extends Component {
 
@@ -20,12 +28,17 @@ handleName = ev => {
 render() {
   return (
     <footer className='chatbar'>
-      <input className="chatbar-username" defaultValue={this.props.currentUser} onKeyPress={this.handleName}/>
+      <input className="chatbar-username" placeholder={this.props.currentUser} onKeyPress={this.handleName}/>
       {/* <input className="chatbar-message" placeholder="Type a message and hit ENTER" onKeyPress={this.props.messageHandler} /> */}
       <input className="chatbar-message" placeholder="Type a message and hit ENTER" onKeyPress={this.handleKeyPress} />
     </footer>
   );
 }
+}
+Chatbar.propTypes = {
+  currentUser: PropTypes.string,
+  changeUser: PropTypes.func,
+  addMessage: PropTypes.func
 }
 
 export default Chatbar;
