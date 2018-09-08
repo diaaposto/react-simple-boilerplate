@@ -39,4 +39,5 @@ Install the dependencies and start the server.
 - express
 - ws
 - uuid
+- prop-types
 ```
