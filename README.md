@@ -2,7 +2,7 @@ React Boilerplate
 =====================
 
 A minimal and light dev environment for ReactJS.
-Chatty App is a single page messenger app that facilitates communication amongst multiple users in real time. Logging in is not a requirement, yet, once connected, your handle will be "Guest". Please change your name if you wish to reveal it! A uniquely coloured name will be assigned to each connected guest.
+Chatty App is a single page messenger app that facilitates communication amongst multiple users in real time. Logging in is not a requirement, yet, once connected, you can chat with your default handle of "Guest". Please change your name if you wish to reveal it! A unique colour will be assigned to you.
 
 ## Final Product
 
