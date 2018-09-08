@@ -34,10 +34,12 @@ class App extends Component {
 //changeName is the function, changeUser is the key of the props obj given to the child component chatbar
   changeName = (newName) => {
     this.setState({currentUser: { name: newName }});
+    const oldUsername = this.state.currentUser.name
+    const newUsername = newName
     // console.log("this is newName", newName)
     const displayNotification = {
       type: 'postNotification',
-      content: `${this.state.currentUser.name} has changed their username to ${newName}.`
+      content: `${oldUsername} has changed their username to ${newUsername}.`
     }
     this.socket.send(JSON.stringify(displayNotification));
   }

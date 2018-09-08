@@ -2,7 +2,6 @@
 
 const express = require('express');
 const SocketServer = require('ws').Server;
-const WebSocket = require('ws');
 const uuidv4 = require('uuid/v4');
 
 // Set the port to 3001
@@ -22,7 +21,7 @@ const wss = new SocketServer({ server });
 //Function to select a colour
 
 const setUserColour = () => {
-  const colours = ['#DC143C', '#52a002', '#883fe2', '#FF8C00', '#483D8B', '#2E8B57', '#DAA520'];
+  const colours = ['#ff0000', '#52a002', '#883fe2', '#FF8C00', '#483D8B', '#2E8B57', '#DAA520'];
   return colours[Math.floor(Math.random() * colours.length)];
 }
 
@@ -35,11 +34,11 @@ const getOnlineUsers = () => {
   }
 wss.broadcast(usersOnline);
 }
-// let userData
 
 //ws param contains the object of the person that just connected to your socket
 wss.on('connection', (client) => {
   console.log('Client connected');
+
   getOnlineUsers();
 
   const colourAssign = {
@@ -77,7 +76,6 @@ wss.broadcast = (data) => {
 
 const broadcastBack = (messageStringified) => {
   const msg = JSON.parse(messageStringified);
-  // console.log('this is msg', msg);
   msg.id = uuidv4();
 
   switch(msg.type) {

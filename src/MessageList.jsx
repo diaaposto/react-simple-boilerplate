@@ -8,17 +8,26 @@ class MessageList extends Component {
   render() {
     const {messageList} = this.props
 
-    const chattyMessages = messageList.map((message) => 
-    <Message key={ message.id } username={ message.username } colour={message.colour} content={ message.content } />
-  );
-  return (
-    <main className="messages">
-    {chattyMessages}
-    <div className="message system"></div> 
-    </main>
+    const chattyMessages = messageList.map((message) => {
+
+      if (message.type === 'incomingMessage') {
+        return <Message key={ message.id } username={ message.username } colour={message.colour} content={ message.content } />
+      } else if (message.type === 'incomingNotification') {
+        return <div className="message system" key={message.id}>{message.content}</div>
+      } else {
+        console.log('Type: ', message.type, message.content);
+      }
+    }
+      );
+
+      return (
+      <main className="messages">
+      {chattyMessages}
+      </main>
     );
   }
 }
+
 
 MessageList.propTypes = {
   messageList: PropTypes.array
