@@ -21,20 +21,21 @@ Go to http://localhost:3000/ in your browser.
 Install the dependencies and start the server.
 
 ### Dependencies
-
-babel-core
-babel-loader
-babel-preset-es2015
-babel-preset-react
-css-loader
-node-sass
-sass-loader
-sockjs-client
-style-loader
-webpack
-webpack-dev-server
-react
-react-dom
-express
-ws
-uuid
+```
+- babel-core
+- babel-loader
+- babel-preset-es2015
+- babel-preset-react
+- css-loader
+- node-sass
+- sass-loader
+- sockjs-client
+- style-loader
+- webpack
+- webpack-dev-server
+- react
+- react-dom
+- express
+- ws
+- uuid
+```
