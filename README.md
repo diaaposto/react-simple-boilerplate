@@ -3,6 +3,11 @@ React Boilerplate
 
 A minimal and light dev environment for ReactJS.
 
+
+## Final Product
+
+!["Screenshot of Chatty Chatroom"](https://github.com/diaaposto/tinyapp-version2/blob/master/docs/chatroom.png)
+
 ### Usage
 
 Clone the boilerplate and create your own git repo.
