@@ -7,6 +7,7 @@ Chatty App is a single page messenger app that facilitates communication amongst
 ## Final Product
 
 !["Screenshot of Chatty Chatroom"](https://github.com/diaaposto/react-simple-boilerplate/blob/master/docs/chatroom.png)
+!["Screenshot of Chatroom Message as Image"](https://github.com/diaaposto/react-simple-boilerplate/blob/master/docs/image-message.png)
 
 ### Getting Started
 
